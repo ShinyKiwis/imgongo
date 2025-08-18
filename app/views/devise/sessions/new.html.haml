@@ -1,17 +1,29 @@
-%h2.text-blue-500 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: 'email'
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: 'current-password'
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit 'Log in'
-= render 'devise/shared/links'
+.mx-auto.mt-16.py-8.px-10.rounded-xl{ class: 'backdrop-blur-md bg-gradient-to-b from-white/10 to-white/60 shadow-lg ring-1 ring-black/5' }
+  .text-center.mb-4
+    %h2.text-2xl.mb-2.font-semibold Login with email
+    %p.w-60.mx-auto.text-sm.text-neutral-600 Bring your images with you anywhere on the Internet
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'w-full flex flex-col gap-2' })do |f|
+    .px-4.py-2.flex.items-center.gap-2{ class:'rounded-xl text-sm bg-neutral-300/50'}
+      = icon 'envelope', variant: 'solid', class: 'w-4 text-neutral-600'
+      = f.email_field :email,
+        autofocus: true,
+        autocomplete: 'email',
+        placeholder: 'Email',
+        class: 'w-full focus:outline-none'
+    .px-4.py-2.flex.items-center.gap-2{ class:'rounded-xl text-sm bg-neutral-300/50'}
+      = icon 'lock-closed', variant: 'solid', class: 'w-4 text-neutral-600'
+      = f.password_field :password,
+        autofocus: true,
+        autocomplete: 'current-password',
+        placeholder: 'Password',
+        class: 'w-full focus:outline-none'
+    .text-right.text-xs.transition{ class: 'text-neutral-500 hover:text-neutral-800' }
+      - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+        = link_to "Forgot password?", new_password_path(resource_name)
+    - if devise_mapping.rememberable?
+      = f.hidden_field :remember_me, value: true
+    .actions
+      = f.submit 'Get Started', class: "primary-button"
+  .text-center.text-sm.mt-2.transition{ class: 'text-neutral-500 hover:text-neutral-800' }
+    - if devise_mapping.registerable? && controller_name != 'registrations'
+      = link_to "Don't have account? Sign up now", new_registration_path(resource_name)
