@@ -1,10 +1,18 @@
-%h2 Forgot your password?
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .actions
-    = f.submit "Send me reset password instructions"
-= render "devise/shared/links"
+.mx-auto.mt-16.py-8.px-10.rounded-xl{ class: 'backdrop-blur-md bg-gradient-to-b from-white/10 to-white/60 shadow-lg ring-1 ring-black/5' }
+  .text-center.mb-4
+    %h2.text-2xl.mb-2.font-semibold Forgot your password?
+    %p.w-60.mx-auto.text-sm.text-neutral-600 Don't worry we can help!
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'w-full flex flex-col gap-2' })do |f|
+    = render 'devise/shared/error_messages', resource: resource
+    .px-4.py-2.flex.items-center.gap-2{ class:'rounded-xl text-sm bg-neutral-300/50'}
+      = icon 'envelope', variant: 'solid', class: 'w-4 text-neutral-600'
+      = f.email_field :email,
+        autofocus: true,
+        autocomplete: 'email',
+        placeholder: 'Email',
+        class: 'w-full focus:outline-none'
+    .actions.mt-2
+      = f.submit 'Send instructions', class: 'primary-button'
+  .text-center.text-sm.mt-2.transition{ class: 'text-neutral-500 hover:text-neutral-800' }
+    - if controller_name != 'sessions'
+      = link_to 'Remember it? Login now', new_session_path(resource_name)
