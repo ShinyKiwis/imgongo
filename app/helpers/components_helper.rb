@@ -18,9 +18,9 @@ module ComponentsHelper
   end
 
   def modal(id:, title:, &block)
-    content_tag :div, id: id, class: "hidden" do
-      concat(content_tag(:div, "", class: "modal-overlay"))
-      concat(content_tag(:div, class: 'modal', data: { controller: 'modal', toggle: id }) do
+    content_tag :div, id: id, class: "hidden", data: { controller: 'modal', toggle: id } do
+      concat(content_tag(:div, "", class: "modal-overlay", data: { action: 'click->modal#toggle' }))
+      concat(content_tag(:div, class: 'modal') do
         concat(content_tag(:div, class: 'modal-header') do
           concat(content_tag(:span, title))
           concat(icon 'x-mark', variant: 'solid', class: 'w-6 text-zinc-800 cursor-pointer', data: { action: 'click->modal#toggle' })

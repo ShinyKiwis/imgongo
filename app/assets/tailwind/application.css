@@ -6,10 +6,10 @@
 }
 
 /* Modals */
-.modal-overlay {
-    @apply fixed inset-0 bg-black/20 flex justify-center items-center z-10;
-}
 
+.modal-overlay {
+    @apply fixed inset-0 flex justify-center items-center z-10;
+}
 .modal-header {
     @apply flex justify-between
 }
@@ -18,5 +18,5 @@
     @apply font-semibold text-xl;
 }
 .modal {
-    @apply fixed left-50 right-50 bg-white rounded-xl shadow-md p-4 mx-auto my-20 min-w-1/4 w-fit z-20;
+    @apply fixed left-50 right-50 rounded-xl shadow-xl p-4 mx-auto my-20 min-w-1/5 w-fit z-20 backdrop-blur-md bg-gradient-to-b from-white/30 to-white/90 shadow-lg ring-1 ring-black/10;
 }
