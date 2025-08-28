@@ -1,3 +1,3 @@
 = modal(id: 'new-album-modal', title: 'New Album') do
-  %h2 test modal
-  = action_button 'Create', '#', class: 'primary-button'
+  = turbo_frame_tag 'new_album_form' do
+    = icon 'faded-spinner', library: "animated", class: 'w-8 mx-auto mt-2'

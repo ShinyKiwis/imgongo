@@ -1,0 +1,6 @@
+= form_with(model: album, class: 'form') do |f|
+  = f.label :name
+  = f.text_field :name, placeholder: 'Daily Moments', data: { turbo_permanent: true, controller: 'autofocus' }
+  = f.label :description
+  = f.text_field :description, placeholder: 'Record daily moments', data: { turbo_permanent: true }
+  = f.submit album.persisted? ? 'Update' : 'Create', class: 'primary-button'

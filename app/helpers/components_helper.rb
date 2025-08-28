@@ -7,9 +7,9 @@ module ComponentsHelper
         controller: 'modal',
         action: 'click->modal#toggle',
         toggle: options[:toggle],
-        turbo: false
       }
     end
+    link_options[:data][:turbo_stream] = options[:turbo_stream]
 
     link_to path, link_options do
       concat icon options[:icon] if options[:icon]
