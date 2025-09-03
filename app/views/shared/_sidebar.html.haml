@@ -1,5 +1,5 @@
 .w-72
   .flex.flex-col.h-full
-    = action_button 'New Album', new_album_path, class: 'primary-button', toggle: 'new-album-modal', turbo_stream: true
+    = action_button 'New Album', new_album_path, class: 'primary-button', turbo_stream: true, turbo_frame: dom_id(Album.new)
     .mt-auto
       = render 'components/uploader'

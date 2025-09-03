@@ -57,6 +57,7 @@ group :development do
   gem "haml-rails", "~> 2.0"
   gem "html2haml"
   gem "haml-lint"
+  gem "pry"
 end
 
 group :test do

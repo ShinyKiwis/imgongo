@@ -1,4 +1,8 @@
 = form_with(model: album, class: 'form') do |f|
+  - if album.errors.any?
+    %ul.text-red-700
+      - album.errors.full_messages.each do |message|
+        %li= message
   = f.label :name
   = f.text_field :name, placeholder: 'Daily Moments', data: { turbo_permanent: true, controller: 'autofocus' }
   = f.label :description

@@ -1,15 +1,12 @@
 module ComponentsHelper
   def action_button(text, path, options = {})
-    link_options = {}
-    link_options[:class] = options[:class]
-    if options[:toggle].present?
-      link_options[:data] = {
-        controller: 'modal',
-        action: 'click->modal#toggle',
-        toggle: options[:toggle],
+    link_options = {
+      data: {
+        turbo_stream: options[:turbo_stream],
+        turbo_frame: options[:turbo_frame]
       }
-    end
-    link_options[:data][:turbo_stream] = options[:turbo_stream]
+    }
+    link_options[:class] = options[:class]
 
     link_to path, link_options do
       concat icon options[:icon] if options[:icon]
@@ -18,7 +15,7 @@ module ComponentsHelper
   end
 
   def modal(id:, title:, &block)
-    content_tag :div, id: id, class: "hidden", data: { controller: 'modal', toggle: id } do
+    content_tag :div, id: id, data: { controller: 'modal', toggle: id } do
       concat(content_tag(:div, "", class: "modal-overlay", data: { action: 'click->modal#toggle' }))
       concat(content_tag(:div, class: 'modal') do
         concat(content_tag(:div, class: 'modal-header') do
