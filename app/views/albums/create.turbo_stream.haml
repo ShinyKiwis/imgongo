@@ -1,0 +1,3 @@
+= turbo_stream.append 'albums' do
+  = render 'shared/sidebar_item', title: @album.name, path: album_path(@album)
+= turbo_stream.update Album.new, ''

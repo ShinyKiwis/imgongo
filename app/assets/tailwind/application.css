@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Scrollbar */
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        width: 4px;
+        height: 8px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-zinc-800;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        @apply bg-zinc-800
+    }
+}
+
 /* Buttons */
 .primary-button {
     @apply bg-zinc-800 block hover:bg-zinc-700 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
