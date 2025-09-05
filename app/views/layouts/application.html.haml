@@ -24,4 +24,5 @@
           = render 'shared/sidebar'
           .w-full
             = yield
-    = turbo_frame_tag Album.new        
+    = turbo_frame_tag Album.new
+    = render 'components/confirmation_modal'

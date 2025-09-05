@@ -1,0 +1,8 @@
+%dialog#turbo-confirm
+  = modal(id: 'confirmation', title: 'Are you sure?', closable: false) do
+    %form{ method: 'dialog' }
+      %p This action can't be undone!
+      %div
+        %button{ value: 'cancel' } Cancel
+        %button{ value: 'confirm' } Confirm
+
