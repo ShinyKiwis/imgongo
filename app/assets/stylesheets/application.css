@@ -18,3 +18,7 @@ body {
 		background: url("light.jpg") no-repeat center center fixed;
 		background-size: cover;
 }
+
+dialog {
+    background: none;
+}

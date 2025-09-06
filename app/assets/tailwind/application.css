@@ -21,10 +21,15 @@
     @apply bg-zinc-800 block hover:bg-zinc-700 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
 }
 
-/* Modals */
-.modal-overlay {
-    @apply fixed inset-0 bg-black/20 flex justify-center items-center z-10;
+.secondary-button {
+    @apply bg-zinc-500 block hover:bg-zinc-400 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
 }
+
+.danger-button {
+    @apply bg-red-600 block hover:bg-red-500 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
+}
+
+/* Modals */
 .modal-header {
     @apply flex justify-between mb-2;
 }
@@ -32,8 +37,13 @@
 .modal-header span {
     @apply font-semibold text-xl;
 }
+
 .modal {
-    @apply fixed left-50 right-50 rounded-xl shadow-xl p-4 mx-auto my-20 min-w-1/5 w-fit z-20 backdrop-blur-md bg-gradient-to-b from-white/30 to-white/90 shadow-lg ring-1 ring-black/10;
+    @apply rounded-xl shadow-xl p-4 mx-auto mt-40 min-w-1/5 w-fit z-20 backdrop-blur-md bg-gradient-to-b from-white/30 to-white/90 shadow-lg ring-1 ring-black/10;
+}
+
+.modal::backdrop {
+    @apply bg-black/10;
 }
 
 /* Form */

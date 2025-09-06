@@ -1,10 +1,20 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+    static targets = ['dialog'];
+    static values = { hidden: Boolean };
+
+    connect() {
+        if(!this.hiddenValue) {
+            this.dialogTarget.showModal();
+        }
+    }
+
     toggle() {
-        const modal = document.getElementById(this.element.dataset.toggle)
-        if(modal) {
-            modal.classList.toggle('hidden')
+        if(this.dialogTarget.open) {
+            this.dialogTarget.close();
+        } else {
+            this.dialogTarget.showModal();
         }
     }
 }

@@ -1,8 +1,6 @@
-%dialog#turbo-confirm
-  = modal(id: 'confirmation', title: 'Are you sure?', closable: false) do
-    %form{ method: 'dialog' }
-      %p This action can't be undone!
-      %div
-        %button{ value: 'cancel' } Cancel
-        %button{ value: 'confirm' } Confirm
-
+= modal(id: 'turbo-confirm', title: 'Are you sure?', hidden: true, closable: false) do
+  %form{ method: 'dialog' }
+    %p This action can't be undone!
+    %div.flex.gap-2.mt-4
+      %button.secondary-button{ value: 'cancel' } Cancel
+      %button.danger-button{ value: 'confirm' } Confirm
