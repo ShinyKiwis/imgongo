@@ -1,12 +1,9 @@
 class AlbumsController < ApplicationController
   before_action :fetch_albums
+  before_action :fetch_album, only: [:show, :destroy]
 
   def new
     @album = current_user.albums.new
-  end
-
-  def show
-    @album = current_user.albums.find(params[:id])
   end
 
   def create
@@ -21,6 +18,15 @@ class AlbumsController < ApplicationController
     end
   end
 
+  def show
+  end
+
+  def destroy
+    album_name = @album.name
+    @album.destroy
+    redirect_to root_path, notice: "'#{album_name}' is destroyed successfully!"
+  end
+
   private
 
   def album_params
@@ -29,5 +35,9 @@ class AlbumsController < ApplicationController
 
   def fetch_albums
     @albums = current_user.albums.select(&:persisted?)
+  end
+
+  def fetch_album
+    @album = current_user.albums.find(params[:id])
   end
 end

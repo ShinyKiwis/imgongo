@@ -9,7 +9,7 @@ module ComponentsHelper
     link_options[:class] = options[:class]
 
     link_to path, link_options do
-      concat icon options[:icon] if options[:icon]
+      concat(icon options[:icon], variant: 'solid', class: 'w-4') if options[:icon]
       concat text
     end
   end

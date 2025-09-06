@@ -18,15 +18,15 @@
 
 /* Buttons */
 .primary-button {
-    @apply bg-zinc-800 block hover:bg-zinc-700 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
+    @apply bg-zinc-800 hover:bg-zinc-700 transition text-white text-sm w-full px-4 py-2 text-center rounded-xl cursor-pointer;
 }
 
 .secondary-button {
-    @apply bg-zinc-500 block hover:bg-zinc-400 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
+    @apply bg-zinc-500 hover:bg-zinc-400 transition text-white text-sm w-full px-4 py-2 text-center rounded-xl cursor-pointer;
 }
 
 .danger-button {
-    @apply bg-red-600 block hover:bg-red-500 transition text-white text-sm w-full py-2 text-center rounded-xl cursor-pointer;
+    @apply bg-red-600 hover:bg-red-500 transition text-white text-sm w-full px-4 py-2 text-center rounded-xl cursor-pointer;
 }
 
 /* Modals */
