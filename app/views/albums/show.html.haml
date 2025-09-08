@@ -1,8 +1,9 @@
-.flex.justify-between.items-center
-  %h2.text-2xl.font-medium= @album.name
-  %div.flex.gap-2
-    = action_button nil, '', icon: 'pencil', class: 'primary-button'
-    = button_to @album, method: :delete, data: { turbo_confirm: true }, class: 'flex gap-2 danger-button' do
-      = icon 'trash', variant: 'solid', class: 'w-4'
-.mt-4
-  %p.italic= @album.description
+= turbo_frame_tag @album do
+  .flex.justify-between.items-center
+    %h2.text-2xl.font-medium= @album.name
+    %div.flex.gap-2
+      = action_button nil, edit_album_path(@album), icon: 'pencil', class: 'primary-button'
+      = button_to @album, method: :delete, data: { turbo_confirm: true, turbo_frame: "_top" }, class: 'flex gap-2 danger-button' do
+        = icon 'trash', variant: 'solid', class: 'w-4'
+  .mt-4
+    %p.italic= @album.description

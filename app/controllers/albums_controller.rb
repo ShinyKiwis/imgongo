@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   before_action :fetch_albums
-  before_action :fetch_album, only: [:show, :destroy]
+  before_action :fetch_album, only: [:show, :edit, :update, :destroy]
 
   def new
     @album = current_user.albums.new
@@ -19,6 +19,17 @@ class AlbumsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @album.update(album_params)
+      redirect_to album_path(@album), notice: 'Updated successfully!'
+    else
+      render :edit
+    end
   end
 
   def destroy
