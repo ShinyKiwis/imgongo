@@ -5,9 +5,7 @@ export default class extends Controller {
     static values = { hidden: Boolean };
 
     connect() {
-        console.log(this.dialogTarget)
         if(!this.hiddenValue) {
-            console.log('HEREEE')
             this.dialogTarget.showModal();
         }
     }
