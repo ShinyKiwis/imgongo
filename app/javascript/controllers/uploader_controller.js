@@ -9,8 +9,6 @@ export default class extends Controller {
 
     filesChange() {
         const files = this.fileUploaderTarget.files;
-        this.remainingFiles.classList.remove('hidden');
-        const badgeCounter = this.remainingFiles.querySelector('span');
-        badgeCounter.textContent = files.length;
+        console.log(files);
     }
 }

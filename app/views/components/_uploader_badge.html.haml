@@ -1,5 +1,7 @@
-.fixed.bottom-12.right-20.w-20.h-20.bg-zinc-800.hover:bg-zinc-600.transition.duration-300.rounded-full.flex.justify-center.items-center.cursor-pointer.shadow-lg.shadow-zinc-600{ data: { turbo_permanent: true } }
-  .relative
-    = icon 'cloud-arrow-up', variant: 'solid', class: 'text-white w-12'
-    #remaining-files.hidden.absolute.-bottom-5.-right-4.text-zinc-800.bg-white.rounded-full.w-6.h-6.flex.justify-center.items-center.shadow-md.shadow-zinc-600
-      %span
+- if @album.present? && @album.persisted?
+  = link_to new_album_attachment_path(@album), data: { turbo_stream: true, turbo_frame: 'attachments' } do
+    .fixed.bottom-12.right-20.w-20.h-20.bg-zinc-800.hover:bg-zinc-600.transition.duration-300.rounded-full.flex.justify-center.items-center.cursor-pointer.shadow-lg.shadow-zinc-600{ data: { turbo_permanent: true } }
+      .relative
+        = icon 'cloud-arrow-up', variant: 'solid', class: 'text-white w-12'
+        #remaining-files.hidden.absolute.-bottom-5.-right-4.text-zinc-800.bg-white.rounded-full.w-6.h-6.flex.justify-center.items-center.shadow-md.shadow-zinc-600
+          %span

@@ -1,11 +1,10 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 # == Schema Information
 #
-# Table name: images
+# Table name: attachments
 #
 #  id          :bigint           not null, primary key
 #  description :string
+#  file_type   :string
 #  name        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -14,22 +13,15 @@
 #
 # Indexes
 #
-#  index_images_on_album_id  (album_id)
-#  index_images_on_user_id   (user_id)
+#  index_attachments_on_album_id  (album_id)
+#  index_attachments_on_user_id   (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (album_id => albums.id)
 #  fk_rails_...  (user_id => users.id)
 #
-one:
-  name: MyString
-  description: MyString
-  album: one
-  user: one
-
-two:
-  name: MyString
-  description: MyString
-  album: two
-  user: two
+class Attachment < ApplicationRecord
+  belongs_to :album
+  belongs_to :user
+end

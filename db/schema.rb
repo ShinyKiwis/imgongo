@@ -23,15 +23,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_154635) do
     t.index ["user_id"], name: "index_albums_on_user_id"
   end
 
-  create_table "images", force: :cascade do |t|
+  create_table "attachments", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "file_type"
     t.bigint "album_id"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["album_id"], name: "index_images_on_album_id"
-    t.index ["user_id"], name: "index_images_on_user_id"
+    t.index ["album_id"], name: "index_attachments_on_album_id"
+    t.index ["user_id"], name: "index_attachments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,6 +61,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_154635) do
   end
 
   add_foreign_key "albums", "users"
-  add_foreign_key "images", "albums"
-  add_foreign_key "images", "users"
+  add_foreign_key "attachments", "albums"
+  add_foreign_key "attachments", "users"
 end

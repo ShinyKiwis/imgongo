@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'dashboards#show', as: :authenticated_root
 
-    resources :albums
-    resources :images
+    resources :albums do
+      resources :attachments, only: [:new, :create, :destroy]
+    end
   end
 
   devise_for :users, skip: [:sessions, :registrations]

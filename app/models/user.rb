@@ -37,4 +37,5 @@ class User < ApplicationRecord
          :confirmable, :trackable
 
   has_many :albums
+  has_many :attachments
 end
