@@ -39,7 +39,7 @@
 }
 
 .modal {
-    @apply rounded-xl shadow-xl p-4 mx-auto mt-32 min-w-1/5 w-fit z-20 backdrop-blur-md bg-gradient-to-b from-white/30 to-white/90 shadow-lg ring-1 ring-black/10;
+    @apply rounded-xl shadow-xl p-4 mx-auto mt-16 min-w-1/5 w-fit z-20 backdrop-blur-md bg-gradient-to-b from-white/30 to-white/90 shadow-lg ring-1 ring-black/10;
 }
 
 .modal::backdrop {

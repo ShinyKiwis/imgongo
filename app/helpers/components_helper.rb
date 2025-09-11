@@ -17,7 +17,7 @@ module ComponentsHelper
   # hidden value is used for confirmation modal only!
   # turbo_cache helps to prevent UI flickering: https://stackoverflow.com/questions/39864617/rails-turbolinks-5-causing-causing-ui-flicker
   def modal(id: nil, title: nil, hidden: false, closable: true, &block)
-    content_tag :dialog, id: id, class: 'modal', data: { turbo_cache: false, controller: 'modal', modal_target: 'dialog', modal_hidden_value: hidden } do
+    content_tag :dialog, id: id, class: 'modal', data: { turbo_temporary: true, controller: 'modal', modal_target: 'dialog', modal_hidden_value: hidden } do
       concat(content_tag(:div, class: 'modal-header') do
         concat(content_tag(:span, title))
         if closable

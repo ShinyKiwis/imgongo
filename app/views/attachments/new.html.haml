@@ -1,9 +1,18 @@
 = turbo_frame_tag 'attachments' do
+  %template#previewTemplate
+    .preview-item.flex.items-center.py-2.gap-5
+      .flex-1.flex.justify-between.text-sm.text-zinc-800
+        %span.preview-name.text-zinc-800.truncate
+        %span.preview-size
+      .actions.ms-auto
+        .remove-action.danger-button
+          = icon 'trash', variant: 'solid', class: 'w-4'
   = modal(title: 'Upload Attachments') do
-    = form_with model: @attachment, url: album_attachments_path, class: 'w-128', data: { controller: 'uploader' } do |f|
+    = form_with model: @attachment, url: album_attachments_path, class: 'w-156', data: { controller: 'uploader' } do |f|
       = f.hidden_field :album, value: @album.id
       = f.file_field :files, multiple: true, hidden: true, data: { uploader_target: 'fileUploader', action: 'change->uploader#filesChange'}
       .w-full.h-42.group.mx-auto.border-2.border-dashed.border-zinc-800.rounded-xl.grid.place-items-center.cursor-pointer{data: { action: 'click->uploader#trigger' }}
         %p.text-sm.text-semibold
           = icon 'cloud-arrow-up', variant: 'solid', class: 'w-16 mx-auto text-zinc-800 group-hover:scale-120 transition duration-300'
           %span Upload images or videos
+      .mt-4.max-h-64.overflow-y-auto{ data: { uploader_target: 'fileList' } }
