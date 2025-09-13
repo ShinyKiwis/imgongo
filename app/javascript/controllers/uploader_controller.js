@@ -1,10 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
+import { post } from '@rails/request.js'
+
 
 export default class extends Controller {
     static targets = ['fileUploader', 'fileList', 'submitButton']
 
     connect() {
         this.remainingFiles = document.getElementById('remaining-files');
+        this.uploadedFiles = [];
     }
 
     trigger() {
@@ -13,22 +16,18 @@ export default class extends Controller {
 
     filesChange() {
         const files = Array.from(this.fileUploaderTarget.files);
+        files.forEach(file => {
+            this.uploadedFiles.push({
+                id: this.generateFileId(),
+                file: file
+            })
+            this.fileListTarget.appendChild(this.createPreviewItem(this.uploadedFiles[this.uploadedFiles.length - 1]));
+        })
+
         this.remainingFiles.querySelector('span').textContent = files.length;
         this.remainingFiles.classList.remove('hidden');
-
-        this.uploadedFiles = files.map(file => ({
-            id: this.generateFileId(),
-            file: file
-        }));
-
         this.submitButtonTarget.classList.remove('hidden');
-
-        this.uploadedFiles.forEach((uploadedFile) => {
-            const previewItem = this.createPreviewItem(uploadedFile);
-            this.fileListTarget.appendChild(previewItem);
-        });
-
-        this.fileUploaderTarget.value = "";
+        this.fileUploaderTarget.value = '';
     }
 
     createPreviewItem(item) {
@@ -52,6 +51,33 @@ export default class extends Controller {
         });
 
         return previewItemContainer;
+    }
+
+    async submitForm(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        formData.delete('attachment[files][]');
+        this.uploadedFiles.forEach(uploadedFile => {
+            formData.append('attachment[files][]', uploadedFile.file)
+        })
+        
+        const response = await post(form.action, {
+            body: formData,
+            responseKind: 'turbo-stream'
+        });
+
+        if(response.ok) {
+            this.clearUploader();
+        }
+    }
+
+    clearUploader() {
+        this.uploadedFiles = [];
+        this.fileListTarget.innerHTML = '';
+        this.remainingFiles.classList.add('hidden');
+        this.submitButtonTarget.classList.add('hidden');
     }
 
     // Credit: https://stackoverflow.com/a/14919494
