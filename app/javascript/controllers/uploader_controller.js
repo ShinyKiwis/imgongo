@@ -1,10 +1,10 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ['fileUploader', 'fileList']
+    static targets = ['fileUploader', 'fileList', 'submitButton']
 
     connect() {
-        this.remainingFiles = document.getElementById('remaining-files')
+        this.remainingFiles = document.getElementById('remaining-files');
     }
 
     trigger() {
@@ -21,10 +21,14 @@ export default class extends Controller {
             file: file
         }));
 
+        this.submitButtonTarget.classList.remove('hidden');
+
         this.uploadedFiles.forEach((uploadedFile) => {
             const previewItem = this.createPreviewItem(uploadedFile);
             this.fileListTarget.appendChild(previewItem);
-        })
+        });
+
+        this.fileUploaderTarget.value = "";
     }
 
     createPreviewItem(item) {
@@ -38,37 +42,38 @@ export default class extends Controller {
         removeButton.addEventListener('click', (event) => {
             const targetId = event.currentTarget.dataset.targetId;
             event.currentTarget.closest('.preview-item').remove();
-            this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile.id != targetId)
+            this.uploadedFiles = this.uploadedFiles.filter(uploadedFile => uploadedFile.id != targetId);
             if (this.uploadedFiles.length > 0) {
                 this.remainingFiles.querySelector('span').textContent = this.uploadedFiles.length;
             } else {
                 this.remainingFiles.classList.add('hidden');
+                this.submitButtonTarget.classList.add('hidden')
             }
-        })
+        });
 
         return previewItemContainer;
     }
 
     // Credit: https://stackoverflow.com/a/14919494
     humanFileSize(bytes, si = true, dp = 1) {
-        const thresh = si ? 1000 : 1024
+        const thresh = si ? 1000 : 1024;
         if (Math.abs(bytes) < thresh) {
-            return bytes + ' B'
+            return bytes + ' B';
         }
         const units = si
             ? ['KB', 'MB']
-            : ['KiB', 'MiB']
-        let u = -1
-        const r = 10 ** dp
+              : ['KiB', 'MiB'];
+        let u = -1;
+        const r = 10 ** dp;
         do {
-            bytes /= thresh
-            ++u
+            bytes /= thresh;
+            ++u;
         } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1)
 
-        return bytes.toFixed(dp) + ' ' + units[u]
+        return bytes.toFixed(dp) + ' ' + units[u];
     }
 
     generateFileId() {
-        return Math.random().toString(36).substring(2, 9);
+        return crypto.randomUUID();
     }
 }
