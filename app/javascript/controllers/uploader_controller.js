@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { post } from '@rails/request.js'
 
-
 export default class extends Controller {
     static targets = ['fileUploader', 'fileList', 'submitButton']
 
@@ -70,6 +69,7 @@ export default class extends Controller {
 
         if(response.ok) {
             this.clearUploader();
+            this.closeModal();
         }
     }
 
@@ -78,6 +78,10 @@ export default class extends Controller {
         this.fileListTarget.innerHTML = '';
         this.remainingFiles.classList.add('hidden');
         this.submitButtonTarget.classList.add('hidden');
+    }
+
+    closeModal() {
+        this.element.closest('dialog').close();
     }
 
     // Credit: https://stackoverflow.com/a/14919494

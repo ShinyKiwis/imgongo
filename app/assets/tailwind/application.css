@@ -82,3 +82,25 @@
 .inline-form .field_with_errors input {
     @apply border-red-700;
 }
+
+#validation-errors {
+    @apply text-red-700;
+}
+
+/* Flash messages */
+.flash-container {
+    @apply fixed top-8 right-12 bg-white rounded-xl w-80;
+}
+
+.flash-header {
+    @apply px-4 py-2 mb-2 text-lg rounded-t-xl font-semibold;
+}
+
+.flash-body {
+    @apply px-4 pb-2;
+}
+
+.flash-notice .flash-header {
+    @apply text-white bg-green-600;
+}
+    

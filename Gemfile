@@ -67,5 +67,5 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
-
 gem "rails_icons", "~> 1.4"
+gem 'active_storage_validations', '~> 3.0'

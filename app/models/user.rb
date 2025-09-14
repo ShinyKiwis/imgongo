@@ -38,4 +38,5 @@ class User < ApplicationRecord
 
   has_many :albums
   has_many :attachments
+  has_one_attached :avatar
 end

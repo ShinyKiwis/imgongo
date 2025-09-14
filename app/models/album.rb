@@ -19,6 +19,7 @@
 #
 class Album < ApplicationRecord
   belongs_to :user
+  has_many :attachments
 
   validates :name, presence: true
 end

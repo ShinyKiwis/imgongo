@@ -1,0 +1,6 @@
+- flash.each do |type, message|
+  .flash-container{ class: "flash-#{type}" }
+    .flash-header
+      %span= type
+    .flash-body
+      %span= message
