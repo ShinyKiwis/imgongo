@@ -15,7 +15,7 @@ class AttachmentsController < ApplicationController
 
     if all_valid
       #Enqueue job
-      redirect_to album_path(@album), notice: 'Attachments are being uploaded!'
+      flash.now[:notice] = 'Your attachments are being uploaded!'
     else
       @validation_errors = attachments.flat_map do |attachment|
         attachment.errors.full_messages

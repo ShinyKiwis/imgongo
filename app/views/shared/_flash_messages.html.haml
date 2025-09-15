@@ -1,6 +1,7 @@
 - flash.each do |type, message|
-  .flash-container{ class: "flash-#{type}" }
+  .flash-container{ class: "flash-#{type}", data: { controller: "dismissible" } }
     .flash-header
-      %span= type
+      %span= type.capitalize
     .flash-body
       %span= message
+

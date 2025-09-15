@@ -89,18 +89,21 @@
 
 /* Flash messages */
 .flash-container {
-    @apply fixed top-8 right-12 bg-white rounded-xl w-80;
+    @apply fixed top-8 right-12 w-80 shadow-lg;
 }
 
 .flash-header {
-    @apply px-4 py-2 mb-2 text-lg rounded-t-xl font-semibold;
+    @apply px-4 py-1 text-lg rounded-t-xl font-semibold;
 }
 
 .flash-body {
-    @apply px-4 pb-2;
+    @apply px-4 py-3 rounded-b-xl backdrop-blur-md bg-gradient-to-b from-white/40 to-white/90;
 }
 
 .flash-notice .flash-header {
-    @apply text-white bg-green-600;
+    @apply text-white backdrop-blur-md bg-gradient-to-b from-green-600/80 to-green-700/70;
 }
-    
+
+.flash-alert .flash-header {
+    @apply text-white backdrop-blur-md bg-gradient-to-b from-red-600/80 to-red-700/70;
+}
