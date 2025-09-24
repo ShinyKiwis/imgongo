@@ -8,8 +8,8 @@
         .remove-action.danger-button
           = icon 'trash', variant: 'solid', class: 'w-4'
   = modal(title: 'Upload Attachments') do
-    = form_with model: @attachment, id: dom_id(@album, :uploader), url: album_attachments_path(@album), class: 'w-156', data: { controller: 'uploader', turbo_permanent: true,  action: 'submit->uploader#submitForm' } do |f|
-      = f.file_field :files, multiple: true, hidden: true, data: { uploader_target: 'fileUploader', action: 'change->uploader#filesChange'}
+    = form_with id: dom_id(@album, :uploader), url: album_attachments_path(@album), class: 'w-156', data: { controller: 'uploader', turbo_permanent: true,  action: 'submit->uploader#submitForm' } do |f|
+      = f.file_field :files, multiple: true, hidden: true, direct_upload: true, data: { uploader_target: 'fileUploader', action: 'change->uploader#filesChange'}
       .w-full.h-42.group.mx-auto.border-2.border-dashed.border-zinc-800.rounded-xl.grid.place-items-center.cursor-pointer{data: { action: 'click->uploader#trigger' }}
         %p.text-sm.text-semibold
           = icon 'cloud-arrow-up', variant: 'solid', class: 'w-16 mx-auto text-zinc-800 group-hover:scale-120 transition duration-300'

@@ -31,7 +31,7 @@ class Attachment < ApplicationRecord
   validates :file,
             attached: true,
             content_type: ACCEPTABLE_ATTACHMENT_FORMATS,
-            size: { less_than: 3.megabytes, message: 'must be less than 5MB' }
+            size: { less_than: 3.megabytes, message: 'must be less than 3MB' }
 
   def thumb
     file.variant(resize_to_fit: [nil, 200])

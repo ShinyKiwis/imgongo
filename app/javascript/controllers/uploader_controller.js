@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
-import { post } from '@rails/request.js'
+import { post } from '@rails/request.js';
+import { Uploader } from "utils/uploader";
 
 export default class extends Controller {
     static targets = ['fileUploader', 'fileList', 'submitButton']
@@ -55,21 +56,31 @@ export default class extends Controller {
     async submitForm(event) {
         event.preventDefault();
         const form = event.target;
-        const formData = new FormData(form);
 
-        formData.delete('attachment[files][]');
-        this.uploadedFiles.forEach(uploadedFile => {
-            formData.append('attachment[files][]', uploadedFile.file)
+        const uploaders = this.uploadedFiles.map(uploadedFile => {
+            return new Uploader(uploadedFile.file, this.fileUploaderTarget.dataset.directUploadUrl);
         })
-        
-        const response = await post(form.action, {
-            body: formData,
-            responseKind: 'turbo-stream'
-        });
 
-        if(response.ok) {
-            this.clearUploader();
-            this.closeModal();
+        try {
+            const signedIds = await Promise.all(uploaders.map(uploader => uploader.uploadFile()))
+
+            const formData = new FormData()
+            signedIds.forEach(id => {
+                formData.append('attachment[signed_ids][]', id)
+            })
+
+            const response = await post(form.action, {
+                body: formData,
+                responseKind: 'turbo-stream'
+            });
+
+            if(response.ok) {
+                this.clearUploader();
+                this.closeModal();
+            }
+
+        } catch(error) {
+            console.error('Upload failed: ', error);
         }
     }
 
@@ -92,7 +103,7 @@ export default class extends Controller {
         }
         const units = si
             ? ['KB', 'MB']
-              : ['KiB', 'MiB'];
+            : ['KiB', 'MiB'];
         let u = -1;
         const r = 10 ** dp;
         do {

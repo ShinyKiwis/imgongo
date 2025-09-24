@@ -3,25 +3,23 @@ class AttachmentsController < ApplicationController
   before_action :fetch_album
 
   def new
-    @attachment = current_user.attachments.new
   end
 
   def create
-    attachments = attachment_params[:files].map do |file|
-      @album.attachments.new(file: file, file_type: file.content_type, user: current_user)
+    signed_ids = attachment_params[:signed_ids]
+    return head :unprocessable_entity unless signed_ids.present?
+
+    errors = []
+    signed_ids.each do |signed_id|
+      attachment = @album.attachments.new(user: current_user)
+      attachment.file.attach(signed_id)
+      errors << attachment.errors.full_messages.join(", ") unless attachment.save
     end
 
-    all_valid = attachments.all?(&:valid?)
-
-    if all_valid
-      #Enqueue job
-      flash.now[:notice] = 'Your attachments are being uploaded!'
+    if errors.present?
+      flash.now[:alert] = errors.uniq.join('. ')
     else
-      @validation_errors = attachments.flat_map do |attachment|
-        attachment.errors.full_messages
-      end.uniq
-
-      render status: :unprocessable_entity
+      flash.now[:notice] = 'Your attachments are being processed!'
     end
   end
 
@@ -32,6 +30,6 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(files: [])
+    params.require(:attachment).permit(signed_ids: [])
   end
 end

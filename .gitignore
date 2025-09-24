@@ -42,3 +42,5 @@
 /config/cache.yml
 /config/queue.yml
 /config/storage.yml
+
+/config/credentials/development.key

@@ -2,7 +2,7 @@
   .flex.flex-col.h-full
     = action_button 'New Album', new_album_path, class: 'primary-button', turbo_stream: true, turbo_frame: 'new-album'
     = turbo_frame_tag 'albums', class: 'flex flex-col gap-2 my-8 overflow-y-auto scrollbar flex-[1_1_0]' do
-      = render 'shared/sidebar_item', title: 'Dashboard', path: root_path
+      = render 'shared/sidebar_item', title: 'Dashboard', path: authenticated_root_path
       - @albums.each do |album|
         = turbo_frame_tag dom_id(album, :sidebar_item) do
           = render 'shared/sidebar_item', title: album.name, path: album_path(album)
