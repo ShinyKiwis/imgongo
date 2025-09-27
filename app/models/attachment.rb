@@ -23,6 +23,8 @@
 #
 class Attachment < ApplicationRecord
   ACCEPTABLE_ATTACHMENT_FORMATS = %w[image/png image/jpeg image/gif image/webp]
+  FILE_SIZE_LIMIT = 5.megabytes
+
   belongs_to :album
   belongs_to :user
 
@@ -31,7 +33,7 @@ class Attachment < ApplicationRecord
   validates :file,
             attached: true,
             content_type: ACCEPTABLE_ATTACHMENT_FORMATS,
-            size: { less_than: 3.megabytes, message: 'must be less than 3MB' }
+            size: { less_than: FILE_SIZE_LIMIT, message: "must be less than #{FILE_SIZE_LIMIT}MB" }
 
   def thumb
     file.variant(resize_to_fit: [nil, 200])

@@ -18,7 +18,7 @@
 
 /* Buttons */
 .primary-button {
-    @apply bg-zinc-800 hover:bg-zinc-700 transition text-white text-sm w-full px-4 py-2 text-center rounded-xl cursor-pointer;
+    @apply bg-zinc-800 hover:bg-zinc-700 transition text-white text-sm w-full px-4 py-2 text-center rounded-xl cursor-pointer disabled:bg-zinc-400 disabled:cursor-not-allowed;
 }
 
 .secondary-button {
@@ -83,7 +83,7 @@
     @apply border-red-700;
 }
 
-#validation-errors {
+.error {
     @apply text-red-700;
 }
 

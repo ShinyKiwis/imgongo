@@ -1,9 +1,10 @@
 import { Controller } from "@hotwired/stimulus";
 import { post } from '@rails/request.js';
 import { Uploader } from "utils/uploader";
+import fileValidator from "validators/file_validator";
 
 export default class extends Controller {
-    static targets = ['fileUploader', 'fileList', 'submitButton']
+    static targets = ['fileUploader', 'fileList', 'submitButton', 'errorMessages']
 
     connect() {
         this.remainingFiles = document.getElementById('remaining-files');
@@ -16,18 +17,27 @@ export default class extends Controller {
 
     filesChange() {
         const files = Array.from(this.fileUploaderTarget.files);
-        files.forEach(file => {
-            this.uploadedFiles.push({
-                id: this.generateFileId(),
-                file: file
-            })
-            this.fileListTarget.appendChild(this.createPreviewItem(this.uploadedFiles[this.uploadedFiles.length - 1]));
-        })
 
-        this.remainingFiles.querySelector('span').textContent = files.length;
-        this.remainingFiles.classList.remove('hidden');
-        this.submitButtonTarget.classList.remove('hidden');
-        this.fileUploaderTarget.value = '';
+        // Validates the files first
+        const isValid = fileValidator(this.fileUploaderTarget);
+        
+        if (isValid == true) {
+            this.errorMessagesTarget.innerHTML = '';
+            files.forEach(file => {
+                this.uploadedFiles.push({
+                    id: this.generateFileId(),
+                    file: file
+                })
+                this.fileListTarget.appendChild(this.createPreviewItem(this.uploadedFiles[this.uploadedFiles.length - 1]));
+            })
+
+            this.remainingFiles.querySelector('span').textContent = files.length;
+            this.remainingFiles.classList.remove('hidden');
+            this.submitButtonTarget.disabled = false;
+            this.fileUploaderTarget.value = '';
+        } else {
+            this.errorMessagesTarget.innerHTML = this.fileUploaderTarget.validationMessage;
+        }
     }
 
     createPreviewItem(item) {
@@ -46,7 +56,7 @@ export default class extends Controller {
                 this.remainingFiles.querySelector('span').textContent = this.uploadedFiles.length;
             } else {
                 this.remainingFiles.classList.add('hidden');
-                this.submitButtonTarget.classList.add('hidden')
+                this.submitButtonTarget.disabled = true;
             }
         });
 
@@ -88,7 +98,7 @@ export default class extends Controller {
         this.uploadedFiles = [];
         this.fileListTarget.innerHTML = '';
         this.remainingFiles.classList.add('hidden');
-        this.submitButtonTarget.classList.add('hidden');
+        this.submitButtonTarget.disabled = true;
     }
 
     closeModal() {

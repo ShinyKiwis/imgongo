@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticated :user do
     mount MissionControl::Jobs::Engine, at: "/jobs"
     root to: 'dashboards#show', as: :authenticated_root
+    post '/rails/active_storage/direct_uploads' => 'direct_uploads#create'
 
     resources :albums do
       resources :attachments, only: [:new, :create, :destroy]
