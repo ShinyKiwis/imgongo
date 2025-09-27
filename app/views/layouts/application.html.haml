@@ -19,9 +19,10 @@
       .absolute.top-8.bottom-8.left-64.right-64.rounded-lg{ class: 'backdrop-blur-md bg-gradient-to-b from-white/10 to-white/50 shadow-lg ring-1 ring-black/10' }
         .flex.flex-col.h-full.px-8.py-6
           = render 'shared/header'
-          .flex.gap-12.h-full
-            = render 'shared/sidebar'
-            .w-full
+          .flex.gap-12.h-full.overflow-hidden
+            .w-72.max-w-72
+              = render 'shared/sidebar'
+            .w-full.h-full
               = yield
     = turbo_frame_tag 'new-album'
     = turbo_frame_tag 'attachments'

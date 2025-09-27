@@ -1,10 +1,10 @@
-= turbo_frame_tag @album do
+= turbo_frame_tag dom_id(@album, :edit) do
   = form_with(model: @album, class: 'inline-form', data: { turbo_frame: "_top" }) do |f|
     .flex.justify-between.items-center
       = f.text_field :name, autofocus: true, placeholder: 'Daily Moments', class: 'text-2xl'
       %div.flex.gap-2.ms-2
-        = button_tag type: 'submit', class: 'primary-button' do
+        = button_tag type: 'submit', class: 'primary-button', tabindex: '-1' do
           = icon 'check-circle', variant: 'solid', class: 'w-4'
         = action_button nil, album_path(@album), icon: 'x-circle', class: 'danger-button'
     .mt-4
-      = f.text_field :description, placeholder: 'Record daily moments'
+      = f.text_area :description, placeholder: 'Record daily moments', class: 'w-full max-h-32 scrollbar outline-none'

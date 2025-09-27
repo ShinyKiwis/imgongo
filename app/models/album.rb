@@ -19,7 +19,7 @@
 #
 class Album < ApplicationRecord
   belongs_to :user
-  has_many :attachments
+  has_many :attachments, dependent: :destroy
 
   validates :name, presence: true
 end

@@ -20,7 +20,8 @@
       .w-full.h-42.group.mx-auto.border-2.border-dashed.border-zinc-800.rounded-xl.grid.place-items-center.cursor-pointer{data: { action: 'click->uploader#trigger' }}
         %p.text-sm.text-semibold
           = icon 'cloud-arrow-up', variant: 'solid', class: 'w-16 mx-auto text-zinc-800 group-hover:scale-120 transition duration-300'
-          %span= "Upload images or videos for '#{@album.name}'"
+          %span Upload images or videos for
+          %span.font-semibold= "'#{@album.name}'"
       .mt-2.error{ data: { uploader_target: 'errorMessages' }}
       .mt-4.max-h-64.overflow-y-auto.scrollbar.px-2{ data: { uploader_target: 'fileList' } }
       .w-48.mx-auto.mt-4

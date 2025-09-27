@@ -1,4 +1,6 @@
 class AttachmentsController < ApplicationController
+  include AttachmentsHelper
+
   layout false
   before_action :fetch_album
 
@@ -12,6 +14,7 @@ class AttachmentsController < ApplicationController
     errors = []
     signed_ids.each do |signed_id|
       attachment = @album.attachments.new(user: current_user)
+      attachment.file_type = file_type_by_signed_id(signed_id)
       attachment.file.attach(signed_id)
       errors << attachment.errors.full_messages.join(", ") unless attachment.save
     end

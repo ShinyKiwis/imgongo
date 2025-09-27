@@ -19,6 +19,7 @@ class AlbumsController < ApplicationController
   end
 
   def show
+    @attachments = @album.attachments.order(created_at: :desc)
   end
 
   def edit
@@ -45,10 +46,10 @@ class AlbumsController < ApplicationController
   end
 
   def fetch_albums
-    @albums = current_user.albums.select(&:persisted?)
+    @albums = current_user.albums.where.not(id: nil).order(created_at: :desc)
   end
 
   def fetch_album
-    @album = current_user.albums.find(params[:id])
+    @album = @albums.find(params[:id])
   end
 end
