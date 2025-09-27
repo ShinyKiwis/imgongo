@@ -43,6 +43,7 @@ export default class extends Controller {
     createPreviewItem(item) {
         const previewTemplate = document.getElementById('previewTemplate');
         const previewItemContainer = document.importNode(previewTemplate.content, true);
+        previewItemContainer.querySelector('.preview-item').dataset.fileId = item.id;
         previewItemContainer.querySelector('.preview-name').textContent = item.file.name;
         previewItemContainer.querySelector('.preview-size').textContent = this.humanFileSize(item.file.size);
 
@@ -68,7 +69,12 @@ export default class extends Controller {
         const form = event.target;
 
         const uploaders = this.uploadedFiles.map(uploadedFile => {
-            return new Uploader(uploadedFile.file, this.fileUploaderTarget.dataset.directUploadUrl);
+            return new Uploader(
+                uploadedFile.id,
+                uploadedFile.file,
+                this.fileUploaderTarget.dataset.directUploadUrl,
+                this.updateProgress
+            );
         })
 
         try {
@@ -86,7 +92,6 @@ export default class extends Controller {
 
             if(response.ok) {
                 this.clearUploader();
-                this.closeModal();
             }
 
         } catch(error) {
@@ -94,9 +99,24 @@ export default class extends Controller {
         }
     }
 
+    updateProgress(fileId, percentage) {
+        const fileContainer = document.querySelector(`[data-file-id="${fileId}"]`);
+        const progressBarContainer = fileContainer.querySelector('.upload-progress');
+        const progressBar = progressBarContainer.querySelector('.progress-bar');
+
+        if (progressBarContainer.classList.contains('hidden')) {
+            fileContainer.querySelector('.preview-size').remove();
+            fileContainer.querySelector('.actions').remove();
+            progressBarContainer.classList.remove('hidden');
+        }
+
+        if (percentage <= 100) {
+            progressBar.style.width = `${percentage}%`;
+        }
+    }
+
     clearUploader() {
         this.uploadedFiles = [];
-        this.fileListTarget.innerHTML = '';
         this.remainingFiles.classList.add('hidden');
         this.submitButtonTarget.disabled = true;
     }

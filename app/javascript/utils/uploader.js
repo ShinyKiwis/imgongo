@@ -1,7 +1,9 @@
 import { DirectUpload } from '@rails/activestorage';
 
 export class Uploader {
-    constructor(file, url) {
+    constructor(file_id, file, url, progressCallback) {
+        this.file_id = file_id;
+        this.progressCallback = progressCallback;
         this.upload = new DirectUpload(file, url, this);
     }
 
@@ -22,6 +24,9 @@ export class Uploader {
     }
 
     directUploadDidProgress(event) {
-        console.log(`Progress: ${event.loaded / event.total * 100}%`)
+        if (this.progressCallback) {
+            const percentage = Math.round(event.loaded / event.total * 100);
+            this.progressCallback(this.file_id, percentage)
+        }
     }
 }
