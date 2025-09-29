@@ -34,7 +34,7 @@ class Attachment < ApplicationRecord
     attachable.variant :thumb, resize_to_fit: [nil, 200], preprocessed: true
   end
 
-  after_create_commit :broadcast_to_clients
+  after_commit :broadcast_to_clients
 
   validates :file,
             attached: true,
@@ -44,8 +44,11 @@ class Attachment < ApplicationRecord
   private
 
   def broadcast_to_clients
-    # TODO: Implement real time rendering
-    # ActionCableBroadcastJob.perform_later(id)
+    if id_previously_changed?
+      Attachments::BroadcastJob.perform_later('new_attachment', self)
+    else
+      Attachments::BroadcastJob.perform_later('update_attachment', self)
+    end
   end
 
 end

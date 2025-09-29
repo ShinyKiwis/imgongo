@@ -1,3 +1,4 @@
+= turbo_stream_from dom_id(@album)
 = turbo_frame_tag @album do
   .flex.flex-col.gap-4.h-full
     = turbo_frame_tag dom_id(@album, :edit) do
@@ -9,7 +10,6 @@
             = icon 'trash', variant: 'solid', class: 'w-4'
       %p.mt-2.italic= @album.description
     .flex-1.overflow-y-auto.scrollbar-hidden
-      .columns-2.md:columns-3.lg:columns-4.gap-4
+      .columns-2.md:columns-3.lg:columns-4.gap-4{ id: dom_id(@album, :show) }
         - @attachments.each do |attachment|
-          .break-inside-avoid
-            = image_tag attachment.file.variant(:thumb), class: 'cursor-pointer w-full mb-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200'
+          = render partial: 'attachments/attachment', locals: { attachment: attachment }
