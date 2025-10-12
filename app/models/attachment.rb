@@ -41,6 +41,11 @@ class Attachment < ApplicationRecord
             content_type: ACCEPTABLE_ATTACHMENT_FORMATS,
             size: { less_than: FILE_SIZE_LIMIT, message: "must be less than #{FILE_SIZE_LIMIT}MB" }
 
+  def download_url
+    ActiveStorage::Current.url_options = Rails.application.routes.default_url_options if ActiveStorage::Current.url_options.blank?
+    file.attached? ? file.blob.url : '' 
+  end
+  
   private
 
   def broadcast_to_clients

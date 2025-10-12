@@ -1,0 +1,16 @@
+= turbo_stream.update @attachment do
+  = modal do
+    .w-256.h-128
+      .flex.h-full.gap-4
+        %div{ class: 'w-3/4 h-full'}
+          = image_tag @attachment.download_url, class: 'w-full h-full object-contain'
+        .flex-grow.p-3
+          .flex.gap-2.items-center.mx-auto
+            = action_button nil, edit_album_path(@attachment.album), icon: 'pencil', class: 'primary-button'
+            = button_tag class: 'primary-button', data: { controller: 'copyable', copyable_source_value: @attachment.file.url } do
+              = icon 'clipboard', variant: 'solid', class: 'w-4'
+            = link_to @attachment.file.url, download: true, class: 'primary-button' do
+              = icon 'arrow-down-tray', variant: 'solid', class: 'w-4'
+            = button_to [@album, @attachment], method: :delete, data: { turbo_confirm: true, turbo_frame: "_top" }, class: 'flex gap-2 danger-button' do
+              = icon 'trash', variant: 'solid', class: 'w-4'
+

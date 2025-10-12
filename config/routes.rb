@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     post '/rails/active_storage/direct_uploads' => 'direct_uploads#create'
 
     resources :albums do
-      resources :attachments, only: [:new, :create, :destroy]
+      resources :attachments, only: [:new, :create, :destroy, :show]
     end
   end
 
