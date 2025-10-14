@@ -1,16 +1,29 @@
-= turbo_stream.update @attachment do
+- attachment = @attachment || attachment
+- album = attachment.album
+= turbo_stream.update('flash-container', partial: 'shared/flash_messages')
+= turbo_stream.update attachment do
   = modal do
-    .w-256.h-128
+    .w-256.h-128.pb-2
       .flex.h-full.gap-4
-        %div{ class: 'w-3/4 h-full'}
-          = image_tag @attachment.download_url, class: 'w-full h-full object-contain'
-        .flex-grow.p-3
-          .flex.gap-2.items-center.mx-auto
-            = action_button nil, edit_album_path(@attachment.album), icon: 'pencil', class: 'primary-button'
-            = button_tag class: 'primary-button', data: { controller: 'copyable', copyable_source_value: @attachment.file.url } do
-              = icon 'clipboard', variant: 'solid', class: 'w-4'
-            = link_to @attachment.file.url, download: true, class: 'primary-button' do
-              = icon 'arrow-down-tray', variant: 'solid', class: 'w-4'
-            = button_to [@album, @attachment], method: :delete, data: { turbo_confirm: true, turbo_frame: "_top" }, class: 'flex gap-2 danger-button' do
-              = icon 'trash', variant: 'solid', class: 'w-4'
-
+        %div{ class: 'w-3/4 h-full mt-2'}
+          = image_tag attachment.download_url, class: 'w-full h-full object-contain rounded-lg'
+        = turbo_frame_tag dom_id(attachment, :edit) do
+          .flex-grow.p-3.max-w-56
+            .flex.gap-2.items-center.mx-auto
+              = action_button nil, edit_album_attachment_path(album, attachment), icon: 'pencil', class: 'primary-button', turbo_stream: true, turbo_frame: dom_id(attachment, :edit)
+              = button_tag class: 'primary-button', data: { controller: 'copyable', copyable_source_value: attachment.file.url } do
+                = icon 'clipboard', variant: 'solid', class: 'w-4'
+              = link_to attachment.file.url, download: true, class: 'primary-button' do
+                = icon 'arrow-down-tray', variant: 'solid', class: 'w-4'
+              = button_to [album, attachment], method: :delete, data: { turbo_confirm: true, turbo_frame: "_top" }, class: 'flex gap-2 danger-button' do
+                = icon 'trash', variant: 'solid', class: 'w-4'
+            .mt-2
+              %span.text-sm.italic.text-neutral-600= attachment.created_at.strftime("%H:%M %d/%m/%Y")
+              - if attachment.name
+                %p.text-center.text-xl.mt-2.font-semibold= attachment.name
+              - else
+                %p.mt-2.font-semibold.italic.text-neutral-600 A beautiful moment...
+              - if attachment.description
+                %p.text-sm.mt-2= attachment.description
+              - else
+                %p.text-sm.mt-2.italic.text-neutral-600 Write something here for your memory...

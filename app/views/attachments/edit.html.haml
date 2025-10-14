@@ -1,0 +1,11 @@
+= turbo_frame_tag dom_id(@attachment, :edit) do
+  = form_with(model: [@attachment.album, @attachment], class: 'inline-form') do |f|
+    .flex-grow.p-3.max-w-56
+      .w-24.flex.gap-2.items-center.mx-auto
+        = button_tag type: 'submit', class: 'primary-button', tabindex: '-1' do
+          = icon 'check-circle', variant: 'solid', class: 'w-4'
+        = action_button nil, album_attachment_path(@attachment.album, @attachment), icon: 'x-circle', class: 'danger-button', turbo_stream: true
+      .h-64.mt-2
+        = f.text_field :name, autofocus: true, placeholder: 'A beautiful moment', class: 'text-lg'
+        .mt-4
+          = f.text_area :description, placeholder: 'Write something here for your memory...', class: 'w-full max-h-64 scrollbar-hidden outline-none'

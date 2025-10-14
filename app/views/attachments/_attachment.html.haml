@@ -1,4 +1,4 @@
-.break-inside-avoid{ id: dom_id(attachment) }
+.break-inside-avoid
   = turbo_frame_tag attachment
   = link_to album_attachment_path(attachment.album, attachment), data: { turbo_stream: true, turbo_frame: dom_id(attachment) } do
     = image_tag url_for(attachment.file.variant(:thumb)), class: 'cursor-pointer w-full mb-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-200'

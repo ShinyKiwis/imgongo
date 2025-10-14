@@ -3,14 +3,14 @@ class AttachmentsController < ApplicationController
 
   layout false
   before_action :fetch_album
-  before_action :fetch_attachment, only: [:show, :destroy]
+  before_action :fetch_attachment, only: [:show, :destroy, :edit, :update]
 
 
   def new
   end
 
   def create
-    signed_ids = attachment_params[:signed_ids]
+    signed_ids = upload_attachment_params[:signed_ids]
     return head :unprocessable_entity unless signed_ids.present?
 
     errors = []
@@ -35,6 +35,12 @@ class AttachmentsController < ApplicationController
   end
 
   def update
+    if @attachment.update!(attachment_params)
+      flash.now[:notice] = 'Your attachment is updated!'
+      render :show
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -55,7 +61,11 @@ class AttachmentsController < ApplicationController
     @attachment = @album.attachments.find(params[:id])
   end
 
-  def attachment_params
+  def upload_attachment_params
     params.require(:attachment).permit(signed_ids: [])
+  end
+
+  def attachment_params
+    params.require(:attachment).permit(:name, :description)
   end
 end

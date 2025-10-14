@@ -12,10 +12,10 @@ class Attachments::BroadcastJob < ApplicationJob
     @attachment = attachment
 
     Turbo::StreamsChannel.send(
-      broadcast_event,
+      stream_action,
       dom_id(attachment.album),
       target: broadcast_target,
-      partial: 'attachments/attachment',
+      partial: broadcast_template,
       locals: { attachment: attachment }
     )
   end
@@ -25,7 +25,7 @@ class Attachments::BroadcastJob < ApplicationJob
   attr_reader :event
   attr_reader :attachment
 
-  def broadcast_event
+  def stream_action
     {
       new_attachment: 'broadcast_prepend_to',
       update_attachment: 'broadcast_replace_to'
@@ -36,6 +36,13 @@ class Attachments::BroadcastJob < ApplicationJob
     {
       new_attachment: dom_id(attachment.album, :show),
       update_attachment: dom_id(attachment)
+    }.with_indifferent_access.fetch(event)
+  end
+
+  def broadcast_template
+    {
+      new_attachment: 'attachments/attachment',
+      update_attachment: 'attachments/show'
     }.with_indifferent_access.fetch(event)
   end
 end
