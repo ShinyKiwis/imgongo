@@ -55,7 +55,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "annotaterb"
-  gem "haml-rails", "~> 2.0"
+  gem "haml-rails", "~> 3.0"
   gem "html2haml"
   gem "haml-lint"
   gem "pry"
